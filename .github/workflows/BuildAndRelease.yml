@@ -1,6 +1,5 @@
 name: Build and create a release when tag is pushed
 
-# Only deploy when a new tag is pushed
 on:
     push:
         tags:
@@ -9,15 +8,12 @@ on:
           - "v*.*"
     workflow_dispatch:
 
-# Must match the project() name in CMakeLists.txt
 env:
     APP_NAME: piconesPlus
 
-# Allow this workflow to write back to the repository
 permissions:
     contents: write
 
-# Build binary and send to releases
 jobs:
     build-release:
         runs-on: ubuntu-latest
@@ -42,6 +38,17 @@ jobs:
                  git submodule update --init
                  cd $HOME
                  git clone https://github.com/sekigon-gonnoc/Pico-PIO-USB.git
+
+          - name: Install picotool
+            run: |
+                 cd $HOME
+                 git clone https://github.com/raspberrypi/picotool.git --branch master
+                 cd picotool
+                 mkdir build
+                 cd build
+                 cmake .. -DCMAKE_BUILD_TYPE=Release -DPICOTOOL_NO_LIBUSB=ON
+                 make -j$(nproc)
+                 sudo cp picotool /usr/local/bin/
 
           - name: Update line containing pico_set_program_version() in CMakelists.txt with tag name.
             run: |
