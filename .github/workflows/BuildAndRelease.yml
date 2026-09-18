@@ -46,6 +46,7 @@ jobs:
                  cd picotool
                  mkdir build
                  cd build
+                 export PICO_SDK_PATH=$HOME/pico-sdk
                  cmake .. -DCMAKE_BUILD_TYPE=Release -DPICOTOOL_NO_LIBUSB=ON
                  make -j$(nproc)
                  sudo cp picotool /usr/local/bin/
