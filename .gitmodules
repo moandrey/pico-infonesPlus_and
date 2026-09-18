@@ -4,6 +4,6 @@
 [submodule "tusb_xinput"]
 	path = tusb_xinput
 	url = https://github.com/PicoPlus-devel/tusb_xinput.git
-[submodule "pico_shared"]
-	path = pico_shared
+[submodule "pico_shared_and"]
+	path = pico_shared_and
 	url = https://github.com/moandrey/pico_shared_and.git
